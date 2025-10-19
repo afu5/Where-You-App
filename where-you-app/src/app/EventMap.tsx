@@ -112,7 +112,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
     
         return position === null ? null : (
           <Marker position={position} icon={userIcon}>
-            <Popup>You are here</Popup>
+            <Popup>You are here!</Popup>
           </Marker>
         )
     }
@@ -128,11 +128,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <UserMarker />
-            {coords && (<Marker position={coords} icon={newIcon}>
-                <Popup>
-                    Testing
-                </Popup>
-            </Marker>
+            {coords && (<Marker position={coords} icon={newIcon}/>
             )}
             <RenderMarkers />
         </MapContainer>
