@@ -8,7 +8,14 @@ import L from "leaflet";
 import MarkerType from "./Marker";
 import yellowStar from "./yellowstar.png"
 
-export const EventMap = ({ locations, sendClickLocation }) => {
+type Location = {"name": string, "time": string, "location": string, "coords": {lat: number, lng: number}, "description": string, "eventType": string};
+
+type EventMapProps = {
+    locations: Location[]; // Array of location objects
+    sendClickLocation: (latlng: { lat: number; lng: number }) => void;
+  };
+
+export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
     const mapRef = useRef(null);
     const [coords, setCoords] = useState(null);
     const latitude = 47.6560;
@@ -16,9 +23,35 @@ export const EventMap = ({ locations, sendClickLocation }) => {
 
     const handleMapClick = (event) => {
         const { lat, lng } = event.latlng;
-        setCoords({ lat, lng });
+        setCoords({ lat: lat, lng: lng });
         sendClickLocation(event.latlng);
       };
+
+    function RenderMarkers() {
+        if (!locations || locations.length === 0) {
+            return null; 
+        }
+        const result = [];
+        for (let i = 0; i < locations.length; i++) {
+            var iconType = undefined;
+            if (locations[i].eventType === "Academic") {
+                iconType = academicIcon;
+            } else if (locations[i].eventType === "Social") {
+                iconType = socialIcon;
+            } else { // == "Advocacy"
+                iconType = advocacyIcon;
+            }
+            const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
+                <Popup>
+                    <h1>{locations[i].name}</h1>
+                    {locations[i].time}
+                    {locations[i].description}
+                </Popup>
+            </Marker>
+            result.push(marker)
+        }
+        return result;
+    }
 
     const socialIcon = L.icon({
         iconUrl: "favicon.ico",
@@ -96,6 +129,7 @@ export const EventMap = ({ locations, sendClickLocation }) => {
                 </Popup>
             </Marker>
             )}
+            <RenderMarkers />
         </MapContainer>
     )
 }

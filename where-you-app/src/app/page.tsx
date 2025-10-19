@@ -9,6 +9,7 @@ type Event = {
   name: string;
   time: string;
   location: string;
+  coords: {lat: number, lng: number};
   description: string;
   eventType: string;
 }
@@ -19,11 +20,11 @@ const getUpdates = async(goal: string): Promise<Event[]> => {
   return events;
 }
 
-const post = async(name: string, time: string, location: string, description: string, eventType: string) => {
+const post = async(name: string, time: string, location: string, coords: {lat: number, lng: number}, description: string, eventType: string) => {
   const res = await fetch('/api', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({name: name, time: time, location: location,
+    body: JSON.stringify({name: name, time: time, location: location, coords: coords,
        description: description, eventType: eventType}),
   });
 }
@@ -35,22 +36,25 @@ export default function Home() {
   const [hour, setHour] = useState('');
   const [min, setMin] = useState('');
   const [location, setLocation] = useState('');
+  const [coords, setCoords] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
-  var currPinLocation;
   var locations;
   
   const handleSave = () => {
     const timeFormatted = `${hour.padStart(2, '0')}:${min.padStart(2, '0')} ${time}`;
-    post(name, timeFormatted, location, description, eventType);
+    post(name, timeFormatted, location, coords, description, eventType);
     setName("");
     setTime("");
     setHour("");
     setMin("");
     setLocation("");
+    setCoords({lat: 0, lng: 0});
     setDescription("");
     setEventType("");
     setPopupOpen(false);
+    console.log(location);
+    console.log(coords);
   }
 
   const generateOptions = (end: number, start: number) => {
@@ -61,13 +65,9 @@ export default function Home() {
     return result;
   }
 
-  const updateCurrPinLocation = (latlng) => {
-    currPinLocation = latlng;
-  }
-
   return (
     <div className="page">
-        <Map locations={locations} sendClickLocation={updateCurrPinLocation}/>
+        <Map locations={locations} sendClickLocation={setCoords}/>
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
