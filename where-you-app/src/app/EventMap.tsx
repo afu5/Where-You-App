@@ -112,12 +112,11 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
     }
 
     return ( 
-        <MapContainer 
-            center={[latitude, longitude]} 
-            zoom={16} 
-            ref={mapRef} 
-            style={{height: "80vh", width: "60vw"}}
-            >
+          <MapContainer 
+                center={[latitude, longitude]} 
+                zoom={16} 
+                ref={mapRef} 
+                style={{height: "100%", width: "100%"}}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"

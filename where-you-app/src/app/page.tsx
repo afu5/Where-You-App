@@ -1,6 +1,4 @@
 'use client'
-import Image from "next/image";
-import styles from "../page.module.css";
 import React, { useState, useEffect }from 'react';
 import Popup from './Popup';
 import Map from "./Map";
@@ -66,9 +64,23 @@ export default function Home() {
   }
 
   return (
-    <div className="page">
-        <Map locations={locations} sendClickLocation={setCoords}/>
-        <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
+    <div>
+        <nav>
+          <div className="filter">
+            show only:
+          </div>
+          <div className="nav-right">
+            
+            <button className="add" onClick={() => setPopupOpen(true)}></button>
+            <div className="search"></div>
+          </div>
+          
+        </nav>
+
+        <div className="map-container">
+          <Map location={locations} sendClickLocation={setCoords}/>
+        </div>
+        
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
             <h2>Add Event Details:</h2>
