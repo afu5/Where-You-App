@@ -16,6 +16,10 @@ html, body {
   flex-direction: column;
 }
 
+h3 {
+  margin-bottom: 0;
+}
+
 nav {
   display: flex;
   position: sticky;
@@ -66,6 +70,23 @@ nav {
   overflow: hidden;
 }
 
+.marker-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Karla", sans-serif;
+}
+
+.desc {
+  background-color: var(--light-gray);
+  font-size: 0.8vw;
+  width: 100%;
+  margin-top: 1vw;
+  padding: 0.5vw;
+  text-align: start;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -79,7 +100,7 @@ nav {
   z-index: 1000;
 }
 
-.popup {
+.add-popup {
   background-color: white;
   padding: 20px;
   border-radius: 8px;

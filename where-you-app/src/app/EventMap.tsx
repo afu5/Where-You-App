@@ -41,7 +41,7 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
                 iconType = academicIcon;
             } else if (locations[i].eventType === "Social") {
                 iconType = socialIcon;
-            } else { // == "Advocacy"
+            } else {
                 iconType = advocacyIcon;
             }
             if (!(!academicChecked && !socialChecked && !advocChecked)) {
@@ -57,10 +57,14 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
             }
             const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
                 <Popup>
-                    <h1>{locations[i].name}</h1>
-                    {locations[i].time}
-
-                    {locations[i].description}
+                    <div className="marker-popup">
+                        <h3>{locations[i].name}</h3>
+                        {locations[i].time} @ {locations[i].location}
+                        <div className="desc">
+                            {locations[i].description}
+                        </div>
+                        
+                    </div>
                 </Popup>
             </Marker>
             result.push(marker)
@@ -69,33 +73,33 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
     }
 
     const socialIcon = L.icon({
-        iconUrl: "favicon.ico",
+        iconUrl: "social-pin.svg",
         shadowUrl: "",
-        iconSize: [55, 55]
+        iconSize: [250, 250]
     });
 
     const academicIcon = L.icon({
-        iconUrl: "favicon.ico",
+        iconUrl: "ac-pin.svg",
         shadowUrl: "",
-        iconSize: [55, 55]
+        iconSize: [250, 250]
     });
 
     const advocacyIcon = L.icon({
-        iconUrl: "favicon.ico",
+        iconUrl: "adv-pin.svg",
         shadowUrl: "",
-        iconSize: [55, 55]
+        iconSize: [250, 250]
     });
 
     const newIcon = L.icon({
-        iconUrl: "favicon.ico",
+        iconUrl: "drop-pin.svg",
         shadowUrl: "",
-        iconSize: [55, 55]
+        iconSize: [50, 50]
     });
 
     const userIcon = L.icon({
-        iconUrl: yellowStar.src,
+        iconUrl: "me-pin.svg",
         shadowUrl: "",
-        iconSize: [55, 55]
+        iconSize: [50, 50]
     });
 
     function UserMarker() {

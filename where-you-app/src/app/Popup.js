@@ -4,7 +4,7 @@ import Link from 'next/link';
 function Popup({ children, onClose }) {
   return(
     <div className='overlay'>
-      <div className='popup'>
+      <div className='add-popup'>
         {children}
         <button className='close' onClick={onClose}>X</button>
       </div>
