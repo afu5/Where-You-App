@@ -34,7 +34,7 @@ export default function Home() {
   const [hour, setHour] = useState('');
   const [min, setMin] = useState('');
   const [location, setLocation] = useState('');
-  const [coords, setCoords] = useState('');
+  const [coords, setCoords] = useState(null);
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
   const [academicChecked, setAcademicChecked] = useState(false);
@@ -51,7 +51,7 @@ export default function Home() {
     setHour("");
     setMin("");
     setLocation("");
-    setCoords({lat: 0, lng: 0});
+    setCoords(null);
     setDescription("");
     setEventType("");
     setPopupOpen(false);
@@ -136,7 +136,7 @@ export default function Home() {
               </option>
             </select></p>
             <button className="save" onClick={handleSave} disabled={name==='' || hour==='HH' 
-                || min ==='MM' || location===''|| description==='' || time===''
+                || min ==='MM' || location===''|| coords===null || description==='' || time===''
                 || eventType===''}>save</button>
           </Popup>
         )}
