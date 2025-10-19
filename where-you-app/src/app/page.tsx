@@ -80,6 +80,9 @@ export default function Home() {
         <nav>
           <div className="filter">
             show only:
+            <button>social</button>
+            <button>academic</button>
+            <button>advocacy</button>
           </div>
           <div className="nav-right">
             
