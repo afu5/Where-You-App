@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../page.module.css";
 import React, { useState, useEffect }from 'react';
 import Popup from './Popup';
+import Map from "./Map";
 
 const getUpdates = async(goal: string): Promise<[string, string, string, string, string]> => {
   const res = await fetch('/api', {cache: 'no-cache'});
@@ -44,6 +45,7 @@ export default function Home() {
 
   return (
     <div className="page">
+        <Map />
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
