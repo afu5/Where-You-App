@@ -37,6 +37,9 @@ export default function Home() {
   const [coords, setCoords] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
+  const [academicChecked, setAcademicChecked] = useState(false);
+  const [socialChecked, setSocialChecked] = useState(false);
+  const [advocChecked, setAdvocChecked] = useState(false);
 
   const [events, setEvents] = useState<Event[]>([]);
   
@@ -57,15 +60,23 @@ export default function Home() {
     setEvents(updatedEvents.events);
   }
 
+  const handleChange = ( type: string) => {
+    if (type==="academic") {
+      setAcademicChecked(!academicChecked);
+    } else if (type==="social") {
+      setSocialChecked(!socialChecked);
+    } else {
+      setAdvocChecked(!advocChecked);
+    }
+  };
+
   useEffect(() => {
     const fetchEvents = async () => {
       const eventList = await getUpdates();
       setEvents(eventList.events);
     };
-    
     fetchEvents();
   }, []);
-
 
   const generateOptions = (end: number, start: number) => {
     const result = [];
@@ -80,9 +91,9 @@ export default function Home() {
         <nav>
           <div className="filter">
             show only:
-            <label><input type="checkbox"></input>Academics</label>
-            <label><input type="checkbox"></input>Social</label>
-            <label><input type="checkbox"></input>Advocacy</label>
+            <label><input checked={academicChecked} type="checkbox" onChange={() => handleChange("academic")}></input>Academics</label>
+            <label><input checked={socialChecked} type="checkbox" onChange={() => handleChange("social")}></input>Social</label>
+            <label><input checked={advocChecked} type="checkbox" onChange={() => handleChange("advocacy")}></input>Advocacy</label>
           </div>
           <div className="nav-right">
             
