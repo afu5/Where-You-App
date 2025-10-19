@@ -5,10 +5,18 @@ import React, { useState, useEffect }from 'react';
 import Popup from './Popup';
 import Map from "./Map";
 
-const getUpdates = async(goal: string): Promise<[string, string, string, string, string]> => {
+type Event = {
+  name: string;
+  dateAndTime: string;
+  location: string;
+  description: string;
+  eventType: string;
+}
+
+const getUpdates = async(goal: string): Promise<Event[]> => {
   const res = await fetch('/api', {cache: 'no-cache'});
-  const data = await res.json();
-  return [data.name, data.dateAndTime, data.location, data.description, data.eventType];
+  const events = await res.json();
+  return events;
 }
 
 const post = async(name: string, dateAndTime: string, location: string, description: string, eventType: string) => {
@@ -35,17 +43,12 @@ export default function Home() {
     setLocation("");
     setDescription("");
     setEventType("");
-    console.log(name);
-    console.log(dateAndTime);
-    console.log(location);
-    console.log(description);
-    console.log(eventType);
     setPopupOpen(false);
   }
 
   return (
     <div className="page">
-        <Map />
+        <Map locations={1}/>
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
@@ -68,7 +71,9 @@ export default function Home() {
                 Advocacy
               </option>
             </select></p>
-            <button className="save" onClick={handleSave}>save</button>
+            <button className="save" onClick={handleSave} disabled={name==='' || dateAndTime===''
+                || location===''|| description==='' 
+                || eventType===''}>save</button>
           </Popup>
         )}
     </div>

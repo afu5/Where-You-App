@@ -1,21 +1,21 @@
 import {NextRequest, NextResponse } from 'next/server'
 
-let name: string = "";
-let dateAndTime: string = "";
-let location: string = "";
-let description: string = "";
-let eventType: string = "";
+let events: {
+  "name": string,
+  "dateAndTime": string,
+  "location": string,
+  "description": string,
+  "eventType": string,
+}[] = [];
 
 export async function GET(req: NextRequest) {
-  return NextResponse.json({ name, dateAndTime, location, description, eventType });
+  return NextResponse.json({ events });
 }
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
-  name = data.name;
-  dateAndTime = data.dateAndTime;
-  location = data.location;
-  description = data.description;
-  eventType = data.eventType;
-  return NextResponse.json({ name, dateAndTime, location, description, eventType });
+  const newEvent = await req.json();
+  events.push(newEvent);
+  console.log("Event added!");
+  console.log(events);
+  return NextResponse.json({ events });
 }
