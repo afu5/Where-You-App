@@ -5,17 +5,17 @@ import React, { useState, useEffect }from 'react';
 import Popup from './Popup';
 import Map from "./Map";
 
-const getUpdates = async(goal: string): Promise<[string, string, string, string, string]> => {
+const getUpdates = async(goal: string): Promise<[string, string, string, {lat: number, lng: number}, string, string]> => {
   const res = await fetch('/api', {cache: 'no-cache'});
   const data = await res.json();
-  return [data.name, data.dateAndTime, data.location, data.description, data.eventType];
+  return [data.name, data.dateAndTime, data.location, data.coords, data.description, data.eventType];
 }
 
-const post = async(name: string, dateAndTime: string, location: string, description: string, eventType: string) => {
+const post = async(name: string, dateAndTime: string, location: string, coords: {lat: number, lng: number}, description: string, eventType: string) => {
   const res = await fetch('/api', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({name: name, dateAndTime: dateAndTime, location: location,
+    body: JSON.stringify({name: name, dateAndTime: dateAndTime, location: location, coords: coords,
        description: description, eventType: eventType}),
   });
 }
@@ -25,28 +25,37 @@ export default function Home() {
   const [name, setName] = useState('');
   const [dateAndTime, setDateAndTime] = useState('');
   const [location, setLocation] = useState('');
+  const [coords, setCoords] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
-  var currPinLocation;
-  var locations;
-  
+  const locations: Location[] = [];
+  locations.push({name: "yeah",
+    time: "yep",
+    location: "terry",
+    coords: { lat: 47.6560, lng: -122.3095 },
+    description: "yeahh",
+    eventType: "Academic",
+  });
+
   const handleSave = () => {
-    post(name, dateAndTime, location, description, eventType);
+    post(name, dateAndTime, location, coords, description, eventType);
     setName("");
     setDateAndTime("");
     setLocation("");
+    setCoords({lat: 0, lng: 0});
     setDescription("");
     setEventType("");
     console.log(name);
     console.log(dateAndTime);
     console.log(location);
+    console.log(coords);
     console.log(description);
     console.log(eventType);
     setPopupOpen(false);
   }
 
   const updateCurrPinLocation = (latlng) => {
-    currPinLocation = latlng;
+    setCoords(latlng);
   }
 
   return (
