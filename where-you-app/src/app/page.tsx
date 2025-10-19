@@ -53,10 +53,10 @@ export default function Home() {
     setPopupOpen(false);
   }
 
-  const generateOptions = (num: number) => {
+  const generateOptions = (end: number, start: number) => {
     const result = [];
-    for (var i = 1; i <= num; i++) {
-      result.push(<option key={i} value={i}>{i}</option>)
+    for (var i = start; i <= end; i++) {
+      result.push(<option key={i} value={i}>{i.toString().padStart(2, '0')}</option>)
     }
     return result;
   }
@@ -75,12 +75,13 @@ export default function Home() {
             <p>Event Name:<input onChange={(e) => setName(e.target.value)} value={name} placeholder='name'></input></p>
             <p>Time:<select onChange={(e) => setHour(e.target.value)} value={hour}>
               <option>HH</option>
-              {generateOptions(12)}
+              {generateOptions(12, 1)}
             </select>:<select onChange={(e) => setMin(e.target.value)} value={min}>
               <option>MM</option>
-              {generateOptions(59)}
+              {generateOptions(59, 0)}
             </select>
             <select onChange={(e) => setTime(e.target.value)} value={time}>
+              <option></option>
               <option>AM</option>
               <option>PM</option>
             </select></p>
@@ -101,7 +102,7 @@ export default function Home() {
               </option>
             </select></p>
             <button className="save" onClick={handleSave} disabled={name==='' || hour==='HH' 
-                || min ==='MM' || location===''|| description==='' 
+                || min ==='MM' || location===''|| description==='' || time===''
                 || eventType===''}>save</button>
           </Popup>
         )}
