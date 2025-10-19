@@ -34,9 +34,12 @@ export default function Home() {
   const [hour, setHour] = useState('');
   const [min, setMin] = useState('');
   const [location, setLocation] = useState('');
-  const [coords, setCoords] = useState('');
+  const [coords, setCoords] = useState(null);
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
+  const [academicChecked, setAcademicChecked] = useState(false);
+  const [socialChecked, setSocialChecked] = useState(false);
+  const [advocChecked, setAdvocChecked] = useState(false);
 
   const [events, setEvents] = useState<Event[]>([]);
   
@@ -48,7 +51,7 @@ export default function Home() {
     setHour("");
     setMin("");
     setLocation("");
-    setCoords({lat: 0, lng: 0});
+    setCoords(null);
     setDescription("");
     setEventType("");
     setPopupOpen(false);
@@ -57,15 +60,23 @@ export default function Home() {
     setEvents(updatedEvents.events);
   }
 
+  const handleChange = ( type: string) => {
+    if (type==="academic") {
+      setAcademicChecked(!academicChecked);
+    } else if (type==="social") {
+      setSocialChecked(!socialChecked);
+    } else {
+      setAdvocChecked(!advocChecked);
+    }
+  };
+
   useEffect(() => {
     const fetchEvents = async () => {
       const eventList = await getUpdates();
       setEvents(eventList.events);
     };
-    
     fetchEvents();
   }, []);
-
 
   const generateOptions = (end: number, start: number) => {
     const result = [];
@@ -80,19 +91,17 @@ export default function Home() {
         <nav>
           <div className="filter">
             show only:
-            <label><input type="checkbox"></input>Academics</label>
-            <label><input type="checkbox"></input>Social</label>
-            <label><input type="checkbox"></input>Advocacy</label>
+            <label><input checked={academicChecked} type="checkbox" onChange={() => handleChange("academic")}></input>Academics</label>
+            <label><input checked={socialChecked} type="checkbox" onChange={() => handleChange("social")}></input>Social</label>
+            <label><input checked={advocChecked} type="checkbox" onChange={() => handleChange("advocacy")}></input>Advocacy</label>
           </div>
           <div className="nav-right">
-            
             <button className="add" onClick={() => setPopupOpen(true)}></button>
             <div className="search"></div>
           </div>
         </nav>
-
         <div className="map-container">
-          <Map locations={events} sendClickLocation={setCoords}/>
+          <Map locations={events} sendClickLocation={setCoords} academicChecked={academicChecked} socialChecked={socialChecked} advocChecked={advocChecked}/>
         </div>
         
                 {isPopupOpen && (
@@ -115,7 +124,6 @@ export default function Home() {
             <p>Description:<textarea onChange={(e) => setDescription(e.target.value)} value={description} placeholder='type a short description'></textarea></p>
             <p>Select the Type of Event: <select onChange={(e) => setEventType(e.target.value)} value={eventType} aria-placeholder="select">
               <option>
-                
               </option>
               <option>
                 Social
@@ -128,7 +136,7 @@ export default function Home() {
               </option>
             </select></p>
             <button className="save" onClick={handleSave} disabled={name==='' || hour==='HH' 
-                || min ==='MM' || location===''|| description==='' || time===''
+                || min ==='MM' || location===''|| coords===null || description==='' || time===''
                 || eventType===''}>save</button>
           </Popup>
         )}

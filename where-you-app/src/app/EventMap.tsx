@@ -11,12 +11,14 @@ import type { Event } from "./page"
 type EventMapProps = {
     locations: Event[]; // Array of location objects
     sendClickLocation: (latlng: { lat: number; lng: number }) => void;
+    academicChecked: boolean;
+    socialChecked: boolean;
+    advocChecked: boolean;
   };
 
-export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
+export const EventMap = ({ locations, sendClickLocation, academicChecked, socialChecked, advocChecked }: EventMapProps) => {
     const mapRef = useRef(null);
     const [coords, setCoords] = useState(null);
-    const [hasFlown, setHasFlown] = useState(false);
     const latitude = 47.6560;
     const longitude = -122.3095;
 
@@ -33,6 +35,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
         }
         const result = [];
         for (let i = 0; i < locations.length; i++) {
+
             var iconType = undefined;
             if (locations[i].eventType === "Academic") {
                 iconType = academicIcon;
@@ -40,6 +43,17 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
                 iconType = socialIcon;
             } else {
                 iconType = advocacyIcon;
+            }
+            if (!(!academicChecked && !socialChecked && !advocChecked)) {
+                if (iconType === academicIcon && !academicChecked) {
+                    continue;
+                }
+                if (iconType === socialIcon && !socialChecked) {
+                    continue;
+                }
+                if (iconType === advocacyIcon && !advocChecked) {
+                    continue;
+                }
             }
             const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
                 <Popup>
@@ -95,10 +109,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
             map.locate();
             const locationFoundHandler = (e) => {
             setPosition(e.latlng);
-            if (!hasFlown) {
-                map.flyTo(e.latlng);
-                setHasFlown(true);
-            }
+            // map.flyTo(e.latlng, 16);
             };
             map.on('locationfound', locationFoundHandler);
 
@@ -111,9 +122,10 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
             click: handleMapClick,
         });
     
+      
         return position === null ? null : (
           <Marker position={position} icon={userIcon}>
-            <Popup>You are here!</Popup>
+            <Popup>You are here</Popup>
           </Marker>
         )
     }
@@ -129,7 +141,11 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <UserMarker />
-            {coords && (<Marker position={coords} icon={newIcon}/>
+            {coords && (<Marker position={coords} icon={newIcon}>
+                <Popup>
+                    Testing
+                </Popup>
+            </Marker>
             )}
             <RenderMarkers />
         </MapContainer>
