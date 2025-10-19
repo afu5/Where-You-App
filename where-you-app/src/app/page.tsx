@@ -44,9 +44,15 @@ export default function Home() {
   }
 
   return (
-    <div className="page">
-        <Map />
-        <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
+    <div>
+        <nav>
+          <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
+        </nav>
+
+        <div className="map-container">
+          <Map/>
+        </div>
+        
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
             <h2>Add Event Details:</h2>
