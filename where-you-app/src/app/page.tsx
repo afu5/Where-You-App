@@ -80,16 +80,15 @@ export default function Home() {
         <nav>
           <div className="filter">
             show only:
-            <button>social</button>
-            <button>academic</button>
-            <button>advocacy</button>
+            <label><input type="checkbox"></input>Academics</label>
+            <label><input type="checkbox"></input>Social</label>
+            <label><input type="checkbox"></input>Advocacy</label>
           </div>
           <div className="nav-right">
             
             <button className="add" onClick={() => setPopupOpen(true)}></button>
             <div className="search"></div>
           </div>
-          
         </nav>
 
         <div className="map-container">
