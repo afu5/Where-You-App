@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import L from "leaflet";
-import yellowStar from "./yellowstar.png"
 import type { Event } from "./page"
 
 type EventMapProps = {
@@ -144,9 +143,7 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
             />
             <UserMarker />
             {coords && (<Marker position={coords} icon={newIcon}>
-                <Popup>
-                    Testing
-                </Popup>
+                
             </Marker>
             )}
             <RenderMarkers />
