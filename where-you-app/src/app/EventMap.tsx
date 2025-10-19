@@ -28,7 +28,6 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
       };
 
     function RenderMarkers() {
-        console.log(locations);
         if (!locations || locations.length === 0) {
             return null; 
         }

@@ -13,7 +13,5 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const newEvent = await req.json();
   events.push(newEvent);
-  console.log("Event added!");
-  console.log(events);
   return NextResponse.json({ events });
 }
