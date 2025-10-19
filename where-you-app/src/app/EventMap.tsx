@@ -37,9 +37,9 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
         for (let i = 0; i < locations.length; i++) {
 
             var iconType = undefined;
-            if (locations[i].eventType === "Academic") {
+            if (locations[i].eventType === "academic") {
                 iconType = academicIcon;
-            } else if (locations[i].eventType === "Social") {
+            } else if (locations[i].eventType === "social") {
                 iconType = socialIcon;
             } else {
                 iconType = advocacyIcon;
@@ -54,6 +54,8 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
                 if (iconType === advocacyIcon && !advocChecked) {
                     continue;
                 }
+            } else {
+                continue;
             }
             const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
                 <Popup>
@@ -93,7 +95,7 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
     const newIcon = L.icon({
         iconUrl: "drop-pin.svg",
         shadowUrl: "",
-        iconSize: [50, 50]
+        iconSize: [40, 40]
     });
 
     const userIcon = L.icon({

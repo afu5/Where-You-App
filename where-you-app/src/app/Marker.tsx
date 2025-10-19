@@ -16,7 +16,6 @@ export default function MarkerType(props) {
           },
         }}
         >
-        <Popup>test popup</Popup>
       </Marker>
     </div>
   );

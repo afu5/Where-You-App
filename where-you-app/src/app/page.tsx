@@ -31,15 +31,15 @@ export default function Home() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [name, setName] = useState('');
   const [time, setTime] = useState('');
-  const [hour, setHour] = useState('');
-  const [min, setMin] = useState('');
+  const [hour, setHour] = useState('HH');
+  const [min, setMin] = useState('MM');
   const [location, setLocation] = useState('');
   const [coords, setCoords] = useState(null);
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
-  const [academicChecked, setAcademicChecked] = useState(false);
-  const [socialChecked, setSocialChecked] = useState(false);
-  const [advocChecked, setAdvocChecked] = useState(false);
+  const [academicChecked, setAcademicChecked] = useState(true);
+  const [socialChecked, setSocialChecked] = useState(true);
+  const [advocChecked, setAdvocChecked] = useState(true);
 
   const [events, setEvents] = useState<Event[]>([]);
   
@@ -48,8 +48,8 @@ export default function Home() {
     await post(name, timeFormatted, location, coords, description, eventType);
     setName("");
     setTime("");
-    setHour("");
-    setMin("");
+    setHour("HH");
+    setMin("MM");
     setLocation("");
     setCoords(null);
     setDescription("");
@@ -91,9 +91,9 @@ export default function Home() {
         <nav>
           <div className="filter">
             show only:
-            <label><input checked={academicChecked} type="checkbox" onChange={() => handleChange("academic")}></input>Academics</label>
-            <label><input checked={socialChecked} type="checkbox" onChange={() => handleChange("social")}></input>Social</label>
-            <label><input checked={advocChecked} type="checkbox" onChange={() => handleChange("advocacy")}></input>Advocacy</label>
+            <label className={`ac-${academicChecked}`}><input className='input-box' checked={academicChecked} type="checkbox" onChange={() => handleChange("academic")}></input></label>
+            <label className={`social-${socialChecked}`}><input className='input-box' checked={socialChecked} type="checkbox" onChange={() => handleChange("social")}></input></label>
+            <label className={`adv-${advocChecked}`}><input className='input-box' checked={advocChecked} type="checkbox" onChange={() => handleChange("advocacy")}></input></label>
           </div>
           <div className="nav-right">
             <button className="add" onClick={() => setPopupOpen(true)}></button>
@@ -106,35 +106,44 @@ export default function Home() {
         
                 {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
-            <h2>Add Event Details:</h2>
-            <p>Event Name:<input onChange={(e) => setName(e.target.value)} value={name} placeholder='name'></input></p>
-            <p>Time:<select onChange={(e) => setHour(e.target.value)} value={hour}>
-              <option>HH</option>
-              {generateOptions(12, 1)}
-            </select>:<select onChange={(e) => setMin(e.target.value)} value={min}>
-              <option>MM</option>
-              {generateOptions(59, 0)}
-            </select>
-            <select onChange={(e) => setTime(e.target.value)} value={time}>
-              <option></option>
-              <option>AM</option>
-              <option>PM</option>
-            </select></p>
-            <p>Location:<input onChange={(e) => setLocation(e.target.value)} value={location} type="location" placeholder='what da addy'></input></p>
-            <p>Description:<textarea onChange={(e) => setDescription(e.target.value)} value={description} placeholder='type a short description'></textarea></p>
-            <p>Select the Type of Event: <select onChange={(e) => setEventType(e.target.value)} value={eventType} aria-placeholder="select">
-              <option>
-              </option>
-              <option>
-                Social
-              </option>
-              <option>
-                Academic
-              </option>
-              <option>
-                Advocacy
-              </option>
-            </select></p>
+            <h3>HOST AN EVENT!</h3>
+            event name:
+            <input onChange={(e) => setName(e.target.value)} value={name}></input>
+            time:
+            <div>
+              <select onChange={(e) => setHour(e.target.value)} value={hour}>
+                <option>HH</option>
+                {generateOptions(12, 1)}
+              </select>:<select onChange={(e) => setMin(e.target.value)} value={min}>
+                <option>MM</option>
+                {generateOptions(59, 0)}
+              </select>
+              <select onChange={(e) => setTime(e.target.value)} value={time}>
+                <option></option>
+                <option>AM</option>
+                <option>PM</option>
+              </select>
+            </div>
+            address:
+            <input onChange={(e) => setLocation(e.target.value)} value={location}></input>
+            description:
+            <textarea onChange={(e) => setDescription(e.target.value)} value={description} placeholder='type a short description'></textarea>
+            select the type of event:
+            <div>
+              <select onChange={(e) => setEventType(e.target.value)} value={eventType} aria-placeholder="select">
+                <option>
+                </option>
+                <option>
+                  social
+                </option>
+                <option>
+                  academic
+                </option>
+                <option>
+                  advocacy
+                </option>
+              </select>
+            </div>
             <button className="save" onClick={handleSave} disabled={name==='' || hour==='HH' 
                 || min ==='MM' || location===''|| coords===null || description==='' || time===''
                 || eventType===''}>save</button>
