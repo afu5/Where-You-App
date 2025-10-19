@@ -5,12 +5,6 @@ import { Marker, Popup, useMap } from "react-leaflet";
 export default function MarkerType(props) {
     const map = useMap();
 
-    const mapIcon = L.icon({
-        iconUrl: "favicon.ico",
-        shadowUrl: "",
-        iconSize: [55, 55]
-    });
-
   return (
     <div>
       <Marker
