@@ -8,7 +8,6 @@ import L from "leaflet";
 import yellowStar from "./yellowstar.png"
 import type { Event } from "./page"
 
-
 type EventMapProps = {
     locations: Event[]; // Array of location objects
     sendClickLocation: (latlng: { lat: number; lng: number }) => void;
@@ -17,6 +16,7 @@ type EventMapProps = {
 export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
     const mapRef = useRef(null);
     const [coords, setCoords] = useState(null);
+    const [hasFlown, setHasFlown] = useState(false);
     const latitude = 47.6560;
     const longitude = -122.3095;
 
@@ -43,10 +43,13 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
             }
             const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
                 <Popup>
-                    <h1>{locations[i].name}</h1>
-                    {locations[i].time}
-
-                    {locations[i].description}
+                    <div className="markerPopup">
+                        <h1>{locations[i].name}</h1>
+                        <p>{locations[i].eventType}
+                        {locations[i].time}
+                        {locations[i].description}
+                        {locations[i].location}</p>
+                    </div>
                 </Popup>
             </Marker>
             result.push(marker)
@@ -91,7 +94,10 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
             map.locate();
             const locationFoundHandler = (e) => {
             setPosition(e.latlng);
-            // map.flyTo(e.latlng, 16);
+            if (!hasFlown) {
+                map.flyTo(e.latlng);
+                setHasFlown(true);
+            }
             };
             map.on('locationfound', locationFoundHandler);
 
@@ -104,7 +110,6 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
             click: handleMapClick,
         });
     
-      
         return position === null ? null : (
           <Marker position={position} icon={userIcon}>
             <Popup>You are here</Popup>
