@@ -37,6 +37,8 @@ export default function Home() {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
+  var currPinLocation;
+  var locations;
   
   const handleSave = () => {
     const timeFormatted = `${hour.padStart(2, '0')}:${min.padStart(2, '0')} ${time}`;
@@ -59,9 +61,13 @@ export default function Home() {
     return result;
   }
 
+  const updateCurrPinLocation = (latlng) => {
+    currPinLocation = latlng;
+  }
+
   return (
     <div className="page">
-        <Map locations={1}/>
+        <Map locations={locations} sendClickLocation={updateCurrPinLocation}/>
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
