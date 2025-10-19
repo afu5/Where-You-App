@@ -2,7 +2,7 @@ import {NextRequest, NextResponse } from 'next/server'
 
 let events: {
   "name": string,
-  "dateAndTime": string,
+  "time": string,
   "location": string,
   "description": string,
   "eventType": string,
