@@ -5,7 +5,7 @@ import React, { useState, useEffect }from 'react';
 import Popup from './Popup';
 import Map from "./Map";
 
-type Event = {
+export type Event = {
   name: string;
   time: string;
   location: string;
@@ -14,7 +14,7 @@ type Event = {
   eventType: string;
 }
 
-const getUpdates = async(goal: string): Promise<Event[]> => {
+const getUpdates = async(): Promise<Event[]> => {
   const res = await fetch('/api', {cache: 'no-cache'});
   const events = await res.json();
   return events;
@@ -39,11 +39,12 @@ export default function Home() {
   const [coords, setCoords] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
-  var locations;
+
+  const [events, setEvents] = useState<Event[]>([]);
   
-  const handleSave = () => {
+  const handleSave = async () => {
     const timeFormatted = `${hour.padStart(2, '0')}:${min.padStart(2, '0')} ${time}`;
-    post(name, timeFormatted, location, coords, description, eventType);
+    await post(name, timeFormatted, location, coords, description, eventType);
     setName("");
     setTime("");
     setHour("");
@@ -53,9 +54,19 @@ export default function Home() {
     setDescription("");
     setEventType("");
     setPopupOpen(false);
-    console.log(location);
-    console.log(coords);
+
+    const updatedEvents = await getUpdates();
+    setEvents(updatedEvents);
   }
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventList = await getUpdates();
+      setEvents(eventList);
+    };
+    
+    fetchEvents();
+  }, []);
 
   const generateOptions = (num: number) => {
     const result = [];
@@ -67,7 +78,7 @@ export default function Home() {
 
   return (
     <div className="page">
-        <Map locations={locations} sendClickLocation={setCoords}/>
+        <Map locations={events.events} sendClickLocation={setCoords}/>
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>

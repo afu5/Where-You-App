@@ -5,13 +5,12 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import L from "leaflet";
-import MarkerType from "./Marker";
 import yellowStar from "./yellowstar.png"
+import type { Event } from "./page"
 
-type Location = {"name": string, "time": string, "location": string, "coords": {lat: number, lng: number}, "description": string, "eventType": string};
 
 type EventMapProps = {
-    locations: Location[]; // Array of location objects
+    locations: Event[]; // Array of location objects
     sendClickLocation: (latlng: { lat: number; lng: number }) => void;
   };
 
@@ -45,6 +44,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
                 <Popup>
                     <h1>{locations[i].name}</h1>
                     {locations[i].time}
+
                     {locations[i].description}
                 </Popup>
             </Marker>
