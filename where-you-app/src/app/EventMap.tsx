@@ -76,19 +76,19 @@ export const EventMap = ({ locations, sendClickLocation, academicChecked, social
     const socialIcon = L.icon({
         iconUrl: "social-pin.svg",
         shadowUrl: "",
-        iconSize: [250, 250]
+        iconSize: [150, 250]
     });
 
     const academicIcon = L.icon({
         iconUrl: "ac-pin.svg",
         shadowUrl: "",
-        iconSize: [250, 250]
+        iconSize: [150, 250]
     });
 
     const advocacyIcon = L.icon({
         iconUrl: "adv-pin.svg",
         shadowUrl: "",
-        iconSize: [250, 250]
+        iconSize: [150, 250]
     });
 
     const newIcon = L.icon({
