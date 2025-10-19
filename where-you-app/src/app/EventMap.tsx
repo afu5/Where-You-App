@@ -8,13 +8,15 @@ import L from "leaflet";
 import yellowStar from "./yellowstar.png"
 import type { Event } from "./page"
 
-
 type EventMapProps = {
     locations: Event[]; // Array of location objects
     sendClickLocation: (latlng: { lat: number; lng: number }) => void;
+    academicChecked: boolean;
+    socialChecked: boolean;
+    advocChecked: boolean;
   };
 
-export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
+export const EventMap = ({ locations, sendClickLocation, academicChecked, socialChecked, advocChecked }: EventMapProps) => {
     const mapRef = useRef(null);
     const [coords, setCoords] = useState(null);
     const latitude = 47.6560;
@@ -33,6 +35,7 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
         }
         const result = [];
         for (let i = 0; i < locations.length; i++) {
+
             var iconType = undefined;
             if (locations[i].eventType === "Academic") {
                 iconType = academicIcon;
@@ -40,6 +43,17 @@ export const EventMap = ({ locations, sendClickLocation }: EventMapProps) => {
                 iconType = socialIcon;
             } else { // == "Advocacy"
                 iconType = advocacyIcon;
+            }
+            if (!(!academicChecked && !socialChecked && !advocChecked)) {
+                if (iconType === academicIcon && !academicChecked) {
+                    continue;
+                }
+                if (iconType === socialIcon && !socialChecked) {
+                    continue;
+                }
+                if (iconType === advocacyIcon && !advocChecked) {
+                    continue;
+                }
             }
             const marker = <Marker position={locations[i].coords} icon={iconType} key={locations[i].coords.lat*locations[i].coords.lat}>
                 <Popup>

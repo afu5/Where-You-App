@@ -96,14 +96,12 @@ export default function Home() {
             <label><input checked={advocChecked} type="checkbox" onChange={() => handleChange("advocacy")}></input>Advocacy</label>
           </div>
           <div className="nav-right">
-            
             <button className="add" onClick={() => setPopupOpen(true)}></button>
             <div className="search"></div>
           </div>
         </nav>
-
         <div className="map-container">
-          <Map locations={events} sendClickLocation={setCoords}/>
+          <Map locations={events} sendClickLocation={setCoords} academicChecked={academicChecked} socialChecked={socialChecked} advocChecked={advocChecked}/>
         </div>
         
                 {isPopupOpen && (
@@ -126,7 +124,6 @@ export default function Home() {
             <p>Description:<textarea onChange={(e) => setDescription(e.target.value)} value={description} placeholder='type a short description'></textarea></p>
             <p>Select the Type of Event: <select onChange={(e) => setEventType(e.target.value)} value={eventType} aria-placeholder="select">
               <option>
-                
               </option>
               <option>
                 Social
