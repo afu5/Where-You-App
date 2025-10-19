@@ -147,6 +147,8 @@ export default function Home() {
             <button className="save" onClick={handleSave} disabled={name==='' || hour==='HH' 
                 || min ==='MM' || location===''|| coords===null || description==='' || time===''
                 || eventType===''}>save</button>
+
+            <div className='no-coords-message'>{(coords===null) && "You have not selected a location. Please close this popup, click on the map to place a pin, and try again!"}</div>
           </Popup>
         )}
     </div>

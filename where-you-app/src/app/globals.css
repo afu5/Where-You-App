@@ -157,7 +157,7 @@ nav {
   border-radius: 1vw;
   position: relative;
   width: 30vw;
-  height: 70vh;
+  height: 75vh;
   z-index: 1000;
 }
 
@@ -203,4 +203,9 @@ textarea {
 
 .save:hover {
   cursor: pointer;
+}
+
+.no-coords-message {
+  font-size: 0.9vw;
+  text-align: center;
 }
