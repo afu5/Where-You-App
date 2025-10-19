@@ -18,6 +18,7 @@ html, body {
 
 h3 {
   margin-bottom: 0;
+  text-align: center;
 }
 
 nav {
@@ -33,9 +34,52 @@ nav {
   display: flex;
   align-items: center;
   background-color: white;
-  width: 20vw;
-  padding: 1vw;
+  padding: 1.5vh;
   border-radius: 0.5vw;
+  gap: 1vw;
+}
+
+.input-box {
+  opacity: 0;
+}
+
+.ac-true {
+  background-image: url('/ac-y.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.ac-false {
+  background-image: url('/ac-n.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.social-true {
+  background-image: url('/social-y.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.social-false {
+  background-image: url('/social-n.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.adv-true {
+  background-image: url('/adv-y.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.adv-false {
+  background-image: url('/adv-n.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .nav-right {
@@ -55,6 +99,10 @@ nav {
   background-size: contain;
   background-repeat: no-repeat;
   background-size: 50% 50%;
+}
+
+.add:hover {
+  cursor: pointer;
 }
 
 .search {
@@ -101,60 +149,58 @@ nav {
 }
 
 .add-popup {
+  display: flex;
+  flex-direction: column;
+  color: black;
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 1vw;
+  border-radius: 1vw;
   position: relative;
-  width: 80vh;
-  height: 500px;
+  width: 30vw;
+  height: 70vh;
   z-index: 1000;
 }
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 1vw;
+  right: 1vw;
   background-color: transparent;
   border: none;
   color: black;
-  font-size: 18px;
   cursor: pointer;
 }
 
-input {
-  position: relative;
-  left: 10px;
-  background-color: white;
+input, select {
+  padding: 0.5vw;
+  font-family: "Karla", sans-serif;
+  margin-top: 1vh;
+  margin-bottom: 3vh;
   color: black;
+  background-color: var(--light-gray);
+  border: none;
+  border-radius: 0.3vw;
 }
 
-input[type="location"] {
-  position: relative;
-  left: 10px;
-  background-color: white;
-  color: black;
-  width: 50%;
-}
 textarea {
-  position: relative;
-  left: 10px;
-  bottom:0px;
-  width: 30%;
-  background-color: white;
-  color: black;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-select {
-  left: 10px;
-  background-color: white;
-  color: black;
-  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 1vh;
+  margin-bottom: 4vh;
+  padding: 0.5vw;
+  height: 100vh;
+  font-family: "Karla", sans-serif;
+  resize: none;
+  overflow-y: auto;
+  background-color: var(--light-gray);
+  border: none;
+  border-radius: 0.3vw;
 }
 
 .save {
-  position: relative;
-  bottom: -300px;
-  width: 10%;
-  height: 5%;
+  margin-bottom: 2vh;
+  font-family: "Karla", sans-serif;
+  font-size: 1vw;
+}
+
+.save:hover {
+  cursor: pointer;
 }
