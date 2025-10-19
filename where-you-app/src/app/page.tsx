@@ -27,6 +27,8 @@ export default function Home() {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
+  var currPinLocation;
+  var locations;
   
   const handleSave = () => {
     post(name, dateAndTime, location, description, eventType);
@@ -43,9 +45,13 @@ export default function Home() {
     setPopupOpen(false);
   }
 
+  const updateCurrPinLocation = (latlng) => {
+    currPinLocation = latlng;
+  }
+
   return (
     <div className="page">
-        <Map />
+        <Map locations={locations} sendClickLocation={updateCurrPinLocation}/>
         <button className="add" onClick={() => setPopupOpen(true)}>Create Event!</button>
         {isPopupOpen && (
           <Popup onClose={() => setPopupOpen(false)}>
