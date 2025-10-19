@@ -60,7 +60,7 @@ export default function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       const eventList = await getUpdates();
-      setEvents(eventList);
+      setEvents(eventList.events);
     };
     
     fetchEvents();
